@@ -5,3 +5,7 @@ __pycache__/
 
 # Go
 runprompt-go
+runprompt-test
+
+# Build output
+dist/

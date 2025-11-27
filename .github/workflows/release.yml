@@ -1,0 +1,84 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_bump:
+        description: 'Version bump type'
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: patch
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for tags
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+
+      - name: Run tests
+        run: go test -v ./...
+
+      - name: Build cross-platform binaries
+        id: build
+        run: |
+          go run tools/build.go --version-bump=${{ github.event.inputs.version_bump }} 2>&1 | tee build.log
+          VERSION=$(grep "^VERSION=" build.log | cut -d'=' -f2)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create and push tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag ${{ steps.build.outputs.version }}
+          git push origin ${{ steps.build.outputs.version }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.build.outputs.version }}
+          name: Release ${{ steps.build.outputs.version }}
+          body: |
+            ## Release ${{ steps.build.outputs.version }}
+            
+            ### Downloads
+            
+            Download the appropriate binary for your platform:
+            
+            | Platform | Architecture | Binary |
+            |----------|--------------|--------|
+            | Linux    | amd64        | `runprompt-linux-amd64` |
+            | Linux    | arm64        | `runprompt-linux-arm64` |
+            | Linux    | 386          | `runprompt-linux-386` |
+            | macOS    | amd64        | `runprompt-darwin-amd64` |
+            | macOS    | arm64 (Apple Silicon) | `runprompt-darwin-arm64` |
+            | Windows  | amd64        | `runprompt-windows-amd64.exe` |
+            | Windows  | arm64        | `runprompt-windows-arm64.exe` |
+            | Windows  | 386          | `runprompt-windows-386.exe` |
+            
+            ### Verification
+            
+            Verify your download using the checksums file:
+            ```bash
+            sha256sum -c runprompt_${{ steps.build.outputs.version }}_checksums.txt --ignore-missing
+            ```
+          files: |
+            dist/*
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
