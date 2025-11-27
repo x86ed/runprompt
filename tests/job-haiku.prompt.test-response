@@ -1,0 +1,42 @@
+{
+  "_provider": "openrouter",
+  "id": "gen-1764246482-AKXA09aU7H2jAGFjXrdN",
+  "provider": "Google",
+  "model": "google/gemini-2.5-pro",
+  "object": "chat.completion",
+  "created": 1764246483,
+  "choices": [
+    {
+      "logprobs": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "STOP",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Of course! Here is a haiku for John:\n\nHe plants seeds of thought,\nGuiding the young minds to bloom\u2014\nA future takes root.",
+        "refusal": null,
+        "reasoning": "**Processing User's Request**\n\nI've got the basic information locked down: John, 30, a teacher. Now the real fun begins \u2013 the haiku! 5-7-5, right? I'm already playing with words, trying to find the perfect imagery to fit John's profile. Think classrooms, lessons, and maybe a touch of youthful energy.\n\n\n**Crafting Poetic Verse**\n\nI've been meticulously refining the haiku about John, the teacher. I've drafted a potential verse, focusing on planting seeds and opening young minds, which I think is \"pretty\". It's a bit heavy on the metaphors, but I believe it works. I'm now fine-tuning the wording for better flow and impact. The age aspect of \"30\" is subtly present.\n\n\n**Developing Potential Verses**\n\nI'm now iterating on the haiku concepts. Attempt 4, aiming for a fusion of age and profession, still feels a bit weak. My initial attempt, focusing on \"He helps little sprouts\", is too generic. I'm exploring various wording combinations to improve this. I've gone back to attempt 1, where I have a solid, metaphorical verse already.\n\n\n**Synthesizing Poetic Options**\n\nI've carefully considered the various haiku drafts, weighing their strengths and weaknesses. Attempt 1 and 3 are in the lead. My feeling is that the first verse, with its imagery of planting seeds and future growth, resonates better, and is the most thematically rich. I am just about ready to finalize my selection.\n\n\n**Evaluating Haiku Choices**\n\nI'm now narrowing down the options. I've thoroughly analyzed all of the drafted verses, and am torn between attempts 1 and 3. Attempt 1 has more organic imagery. Attempt 3 uses light metaphors, which are fitting for teaching. Both meet the \"pretty\" criteria. I'm leaning toward the initial version.\n\n\n",
+        "reasoning_details": [
+          {
+            "format": "google-gemini-v1",
+            "index": 0,
+            "type": "reasoning.text",
+            "text": "**Processing User's Request**\n\nI've got the basic information locked down: John, 30, a teacher. Now the real fun begins \u2013 the haiku! 5-7-5, right? I'm already playing with words, trying to find the perfect imagery to fit John's profile. Think classrooms, lessons, and maybe a touch of youthful energy.\n\n\n**Crafting Poetic Verse**\n\nI've been meticulously refining the haiku about John, the teacher. I've drafted a potential verse, focusing on planting seeds and opening young minds, which I think is \"pretty\". It's a bit heavy on the metaphors, but I believe it works. I'm now fine-tuning the wording for better flow and impact. The age aspect of \"30\" is subtly present.\n\n\n**Developing Potential Verses**\n\nI'm now iterating on the haiku concepts. Attempt 4, aiming for a fusion of age and profession, still feels a bit weak. My initial attempt, focusing on \"He helps little sprouts\", is too generic. I'm exploring various wording combinations to improve this. I've gone back to attempt 1, where I have a solid, metaphorical verse already.\n\n\n**Synthesizing Poetic Options**\n\nI've carefully considered the various haiku drafts, weighing their strengths and weaknesses. Attempt 1 and 3 are in the lead. My feeling is that the first verse, with its imagery of planting seeds and future growth, resonates better, and is the most thematically rich. I am just about ready to finalize my selection.\n\n\n**Evaluating Haiku Choices**\n\nI'm now narrowing down the options. I've thoroughly analyzed all of the drafted verses, and am torn between attempts 1 and 3. Attempt 1 has more organic imagery. Attempt 3 uses light metaphors, which are fitting for teaching. Both meet the \"pretty\" criteria. I'm leaning toward the initial version.\n\n\n"
+          }
+        ]
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 27,
+    "completion_tokens": 1309,
+    "total_tokens": 1336,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1277,
+      "image_tokens": 0
+    }
+  }
+}

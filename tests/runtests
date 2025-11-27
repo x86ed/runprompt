@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+echo "Testing job.prompt..."
+echo "John is a 30 year old teacher" | ./runprompt --model test tests/job.prompt
+
+echo "Testing job-haiku.prompt..."
+echo '{"name": "John", "age": 30, "occupation": "teacher"}' | ./runprompt --model test tests/job-haiku.prompt
+
+echo "Testing stdin-test.prompt..."
+echo "The quick brown fox jumps over the lazy dog." | ./runprompt --model test tests/stdin-test.prompt
+
+echo "Testing self.prompt..."
+./runprompt --model test tests/self.prompt
+
+echo "All tests passed!"

@@ -1,0 +1,60 @@
+{
+  "_provider": "openrouter",
+  "id": "gen-1764246467-heCAiEmKLagFZ0TQQNn9",
+  "provider": "Google",
+  "model": "google/gemini-2.5-pro",
+  "object": "chat.completion",
+  "created": 1764246467,
+  "choices": [
+    {
+      "logprobs": null,
+      "finish_reason": "tool_calls",
+      "native_finish_reason": "STOP",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "refusal": null,
+        "reasoning": "**Defining Information Extraction**\n\nI am now focused on defining the extraction process. I've determined the input text contains a name, age, and occupation. Consequently, I believe the `extract` tool is appropriate to extract those features. The next step is to prepare the call to the function, and ensure I am specifying the right features to extract.\n\n\n**Constructing the Function Call**\n\nI am constructing the call to the `extract` tool. Now I've finalized the parameters. I will use 'John' for `name`, 30 for `age`, and 'teacher' for `occupation`. The call will be `print(default_api.extract(name='John', age=30.0, occupation='teacher')) `. I'm now verifying the types.\n\n\n",
+        "tool_calls": [
+          {
+            "index": 0,
+            "id": "tool_extract_gNrMo4ZF66DO6yVDlbV7",
+            "type": "function",
+            "function": {
+              "name": "extract",
+              "arguments": "{\"occupation\":\"teacher\",\"age\":30,\"name\":\"John\"}"
+            }
+          }
+        ],
+        "reasoning_details": [
+          {
+            "format": "google-gemini-v1",
+            "index": 0,
+            "type": "reasoning.text",
+            "text": "**Defining Information Extraction**\n\nI am now focused on defining the extraction process. I've determined the input text contains a name, age, and occupation. Consequently, I believe the `extract` tool is appropriate to extract those features. The next step is to prepare the call to the function, and ensure I am specifying the right features to extract.\n\n\n**Constructing the Function Call**\n\nI am constructing the call to the `extract` tool. Now I've finalized the parameters. I will use 'John' for `name`, 30 for `age`, and 'teacher' for `occupation`. The call will be `print(default_api.extract(name='John', age=30.0, occupation='teacher')) `. I'm now verifying the types.\n\n\n"
+          },
+          {
+            "id": "tool_extract_gNrMo4ZF66DO6yVDlbV7",
+            "format": "google-gemini-v1",
+            "index": 0,
+            "type": "reasoning.encrypted",
+            "data": "CjoB4/H/Xj2gZuySvCijvGxaI3yoQ0YKUycZuJ7thfCpzlRkiSmUF+H+cx29e2CFISRPlRwI+lol03DCCl0B4/H/XrjoWsuRJv/S+R1d8TWYO3teYgo35IN6d0dM6/TMFpHXBEnQyYl1UJXXRXXfng5+Y8RLi01YEwaNN0CmfbDkvkFf7a3ZT16TptmwdgWA1ut4n/jhlSx99coKZAHj8f9eJdD1OeqkpoNI9ujxBjiOaLrIkMgYtKjKeYJahpoleca5xh3z4KDmqucjCdNc7bdiUt4MxIbY1oQlaISzmKuR/qs7AmbD6vLpuNddIEhC8vTVXO9fjgTYXPFCceP1iNkKmQEB4/H/Xjvet3JFWcsujok4PFbnFbsnFy0R3XGB07xi7kU+JI3AkEIyMvT0+HWUH3uz95VaSSPCt799z6IdQxUC5qaOdI2NH/02Km8JIJBEOUoeROxhYthlYsjjoC7US3xnadHllQdJVtm6Qsc+TKEiz+uevXSf8rk79xFGb0SEmTCUwLWviR7FqP+/MKvp3ORrskMrss3b4BcKnAEB4/H/Xt1jtG/1CmHlqNkt3GBpqYK3HoQKYOQ49lyj86Y5/kr7uIX6jNmiwlAMAidcE/GfpRFxJIqE/R7uUDS8NLoXybYlp55oowOW6T3JK+jlMrfVYYUUREqi12x1dSR60wDBfERgEr0gxSKIZ0QrjqYjrHsyTGf4lvR1CLfAV7PB0uMg7z7IfMyFN5ttAGkmiQSmZOAN9Qj0NrwKcwHj8f9edp2P8K7yHuC1lib082nxp4Cpt5VZmroecQ2sjLjqVWFeC4+WoNjdzcDduVRs0NmzxgTlc/aXW0f/tWnXuTc6aH7IW9linOxjDoPjgyq4KZep7rzPKZmwlTuZ6vX+C5I1rJfl/OZK9gtkMd5PYXYKIgHj8f9e3D8y4LZ0PjHQa8uw6pJGUrTXJcNjILRFHtj1fhs="
+          }
+        ]
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 65,
+    "completion_tokens": 144,
+    "total_tokens": 209,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 137,
+      "image_tokens": 0
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "_provider": "openrouter",
+  "id": "gen-1764246507-Higl3VZ3kh2UbjwuYnsx",
+  "provider": "Google",
+  "model": "google/gemini-2.5-pro",
+  "object": "chat.completion",
+  "created": 1764246507,
+  "choices": [
+    {
+      "logprobs": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "STOP",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "A quick brown fox jumps over a lazy dog.",
+        "refusal": null,
+        "reasoning": "**Assessing Summarization Parameters**\n\nI've determined the user's request is to condense text. Now I'm analyzing the provided input: a concise sentence. Recognizing the input's brevity, the summarization's aim seems to be more of a confirmation of its essence, rather than a true reduction. I am now reflecting on the definition of \"summarize\" in such a straightforward case.\n\n\n**Evaluating Summary Strategies**\n\nI've examined various approaches to summarize. Paraphrasing feels redundant; extracting the core action sacrifices detail. However, recognizing the sentence's inherent conciseness, I see it's already a complete, self-contained statement. Any further reduction would result in a loss of core meaning. Thus, my goal shifts to re-framing the existing statement, not summarizing it further.\n\n\n**Deciding Upon a Conclusion**\n\nThe options were compared and evaluated: rephrasing, extracting core actions, and recognizing the text's inherent nature. I determined the original sentence is, in essence, the perfect summary. Any further reduction would result in loss of key information. I believe the optimal answer is to simply restate the original sentence, as any shortening would be either a paraphrase or an abstraction.\n\n\n**Defining Synthesis of Response**\n\nI'm now formulating my answer: to provide the sentence verbatim. I've eliminated less effective options, like paraphrasing or more abstract reductions. My goal is precision. I am focusing now on how to best convey this conclusion.\n\n\n",
+        "reasoning_details": [
+          {
+            "format": "google-gemini-v1",
+            "index": 0,
+            "type": "reasoning.text",
+            "text": "**Assessing Summarization Parameters**\n\nI've determined the user's request is to condense text. Now I'm analyzing the provided input: a concise sentence. Recognizing the input's brevity, the summarization's aim seems to be more of a confirmation of its essence, rather than a true reduction. I am now reflecting on the definition of \"summarize\" in such a straightforward case.\n\n\n**Evaluating Summary Strategies**\n\nI've examined various approaches to summarize. Paraphrasing feels redundant; extracting the core action sacrifices detail. However, recognizing the sentence's inherent conciseness, I see it's already a complete, self-contained statement. Any further reduction would result in a loss of core meaning. Thus, my goal shifts to re-framing the existing statement, not summarizing it further.\n\n\n**Deciding Upon a Conclusion**\n\nThe options were compared and evaluated: rephrasing, extracting core actions, and recognizing the text's inherent nature. I determined the original sentence is, in essence, the perfect summary. Any further reduction would result in loss of key information. I believe the optimal answer is to simply restate the original sentence, as any shortening would be either a paraphrase or an abstraction.\n\n\n**Defining Synthesis of Response**\n\nI'm now formulating my answer: to provide the sentence verbatim. I've eliminated less effective options, like paraphrasing or more abstract reductions. My goal is precision. I am focusing now on how to best convey this conclusion.\n\n\n"
+          }
+        ]
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 20,
+    "completion_tokens": 668,
+    "total_tokens": 688,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 658,
+      "image_tokens": 0
+    }
+  }
+}
