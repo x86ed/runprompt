@@ -112,7 +112,7 @@ def render_template(template, variables):
         name = name.strip()
         if name == ".":
             return ctx
-        # Handle @index, @first, @last
+        # Handle @index, @first, @last, @key
         if name.startswith("@"):
             return ctx.get(name, "")
         for part in name.split("."):
@@ -125,6 +125,46 @@ def render_template(template, variables):
     def render(tmpl, ctx):
         # Remove comments: {{! ... }}
         tmpl = re.sub(r"\{\{!.*?\}\}", "", tmpl, flags=re.DOTALL)
+
+        # Process {{#each key}}...{{/each}}
+        def each_replace(match):
+            key = match.group(1)
+            inner = match.group(2)
+            val = lookup(key, ctx)
+            result = []
+            if isinstance(val, list):
+                for i, item in enumerate(val):
+                    if isinstance(item, dict):
+                        item_ctx = dict(item)
+                    else:
+                        item_ctx = {}
+                    item_ctx["@index"] = i
+                    item_ctx["@first"] = (i == 0)
+                    item_ctx["@last"] = (i == len(val) - 1)
+                    item_ctx["."] = item
+                    result.append(render(inner, item_ctx))
+            elif isinstance(val, dict):
+                keys = list(val.keys())
+                for i, k in enumerate(keys):
+                    item = val[k]
+                    if isinstance(item, dict):
+                        item_ctx = dict(item)
+                    else:
+                        item_ctx = {}
+                    item_ctx["@key"] = k
+                    item_ctx["@index"] = i
+                    item_ctx["@first"] = (i == 0)
+                    item_ctx["@last"] = (i == len(keys) - 1)
+                    item_ctx["."] = item
+                    result.append(render(inner, item_ctx))
+            return "".join(result)
+
+        tmpl = re.sub(
+            r"\{\{#each\s+(\w+)\}\}(.*?)\{\{/each\}\}",
+            each_replace,
+            tmpl,
+            flags=re.DOTALL
+        )
 
         # Process sections: {{#key}}...{{/key}}
         def section_replace(match):

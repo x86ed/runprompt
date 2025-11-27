@@ -109,6 +109,29 @@ def test_loop_variables():
          {"items": ["x"]}, "FL")
 
 
+def test_each_helper():
+    print("\n--- {{#each}} helper ---")
+    # each with list
+    test("each list", "{{#each items}}{{.}}{{/each}}", 
+         {"items": ["a", "b", "c"]}, "abc")
+    test("each list with @index", "{{#each items}}{{@index}}:{{.}} {{/each}}", 
+         {"items": ["a", "b", "c"]}, "0:a 1:b 2:c ")
+    test("each list objects", "{{#each people}}{{name}} {{/each}}", 
+         {"people": [{"name": "Alice"}, {"name": "Bob"}]}, "Alice Bob ")
+    test("each empty list", "{{#each items}}x{{/each}}", {"items": []}, "")
+    # each with dict
+    test("each dict", "{{#each person}}{{@key}}:{{.}} {{/each}}", 
+         {"person": {"name": "Alice", "age": 30}}, "name:Alice age:30 ")
+    test("each dict @index", "{{#each person}}{{@index}}-{{@key}} {{/each}}", 
+         {"person": {"a": 1, "b": 2}}, "0-a 1-b ")
+    test("each dict @first @last", 
+         "{{#each person}}{{#@first}}[{{/@first}}{{@key}}{{#@last}}]{{/@last}}{{/each}}", 
+         {"person": {"a": 1, "b": 2, "c": 3}}, "[abc]")
+    test("each dict nested values", "{{#each people}}{{name}}({{age}}) {{/each}}", 
+         {"people": {"p1": {"name": "Alice", "age": 30}, "p2": {"name": "Bob", "age": 25}}}, 
+         "Alice(30) Bob(25) ")
+
+
 def main():
     test_basic_interpolation()
     test_dot_notation()
@@ -118,6 +141,7 @@ def main():
     test_combined()
     test_comments()
     test_loop_variables()
+    test_each_helper()
 
     print("\n" + "=" * 40)
     print("Passed: %d, Failed: %d" % (passed, failed))
