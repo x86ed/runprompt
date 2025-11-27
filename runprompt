@@ -298,6 +298,12 @@ def parse_args(args):
     return verbose, overrides, remaining
 
 
+def read_stdin():
+    if sys.stdin.isatty():
+        return None
+    return sys.stdin.read().strip() or None
+
+
 def main():
     global VERBOSE
     verbose, arg_overrides, remaining = parse_args(sys.argv[1:])
@@ -321,7 +327,7 @@ def main():
         print("No provider in model string", file=sys.stderr)
         sys.exit(1)
     url, api_key = get_provider_config(provider)
-    raw_input = sys.stdin.read().strip()
+    raw_input = read_stdin()
     variables = {}
     if raw_input:
         try:
