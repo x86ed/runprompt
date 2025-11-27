@@ -183,7 +183,9 @@ func parseSemver(version string) (int, int, int, error) {
 	return major, minor, patch, nil
 }
 
-// compareSemver compares two semver strings, returns -1, 0, or 1
+// compareSemver compares two semver strings, returns -1, 0, or 1.
+// Note: This function assumes inputs have already been validated as valid semver
+// (via isValidSemver). Parse errors are ignored and will result in zero values.
 func compareSemver(a, b string) int {
 	aMajor, aMinor, aPatch, _ := parseSemver(a)
 	bMajor, bMinor, bPatch, _ := parseSemver(b)
@@ -258,6 +260,8 @@ func build(target Target, version string) (string, error) {
 	outputPath := filepath.Join(distDir, outputName)
 
 	// Set up build command with ldflags for version
+	// -s -w strips debug symbols and DWARF information for smaller binaries
+	// -X main.Version=... injects version at build time (optional: add "var Version string" to main.go to use)
 	ldflags := fmt.Sprintf("-s -w -X main.Version=%s", version)
 	cmd := exec.Command("go", "build", "-ldflags", ldflags, "-o", outputPath, ".")
 
