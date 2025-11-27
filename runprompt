@@ -30,6 +30,7 @@ RESET = "\033[0m"
 TIMEOUT = 120
 
 VERBOSE = False
+PROMPT_PATH = None
 
 
 def log(msg):
@@ -189,6 +190,25 @@ def extract_error_message(error_body):
     return error_body
 
 
+def load_test_response(prompt_path):
+    test_file = prompt_path + ".test-response"
+    if not os.path.exists(test_file):
+        print("Test response file not found: %s" % test_file, file=sys.stderr)
+        sys.exit(1)
+    with open(test_file, "r") as f:
+        content = f.read()
+    log("Loaded test response from: %s" % test_file)
+    return json.loads(content)
+
+
+def save_response(response, provider, save_path):
+    response_with_provider = {"_provider": provider}
+    response_with_provider.update(response)
+    with open(save_path, "w") as f:
+        json.dump(response_with_provider, f, indent=2)
+    log("Saved response to: %s" % save_path)
+
+
 def make_request(url, api_key, model, prompt, output_config, provider):
     headers = {
         "Content-Type": "application/json",
@@ -274,6 +294,7 @@ def apply_overrides(meta):
 
 def parse_args(args):
     verbose = False
+    save_response_path = None
     overrides = {}
     remaining = []
     i = 0
@@ -281,6 +302,15 @@ def parse_args(args):
         arg = args[i]
         if arg == "-v":
             verbose = True
+        elif arg == "--save-response":
+            if i + 1 < len(args):
+                i += 1
+                save_response_path = args[i]
+            else:
+                print("--save-response requires a file path", file=sys.stderr)
+                sys.exit(1)
+        elif arg.startswith("--save-response="):
+            save_response_path = arg[len("--save-response="):]
         elif arg.startswith("--"):
             if "=" in arg:
                 key, value = arg[2:].split("=", 1)
@@ -295,7 +325,7 @@ def parse_args(args):
         else:
             remaining.append(arg)
         i += 1
-    return verbose, overrides, remaining
+    return verbose, save_response_path, overrides, remaining
 
 
 def read_stdin():
@@ -305,14 +335,17 @@ def read_stdin():
 
 
 def main():
-    global VERBOSE
-    verbose, arg_overrides, remaining = parse_args(sys.argv[1:])
+    global VERBOSE, PROMPT_PATH
+    verbose, save_response_path, arg_overrides, remaining = parse_args(
+        sys.argv[1:])
     VERBOSE = verbose
     if len(remaining) < 1:
-        print("Usage: runprompt [-v] [--key=value ...] <prompt_file>",
+        print("Usage: runprompt [-v] [--save-response <file>] "
+              "[--key=value ...] <prompt_file>",
               file=sys.stderr)
         sys.exit(1)
     prompt_path = remaining[0]
+    PROMPT_PATH = prompt_path
     meta, template = parse_prompt_file(prompt_path)
     meta = apply_overrides(meta)
     for key, value in arg_overrides.items():
@@ -326,7 +359,6 @@ def main():
     if not provider:
         print("No provider in model string", file=sys.stderr)
         sys.exit(1)
-    url, api_key = get_provider_config(provider)
     raw_input = read_stdin()
     variables = {"STDIN": raw_input or ""}
     if raw_input:
@@ -345,8 +377,17 @@ def main():
     prompt = render_template(template, variables)
     log("Rendered prompt: %s" % prompt)
     output_config = meta.get("output", {})
-    response = make_request(url, api_key, model, prompt, output_config, provider)
-    result = extract_response(response, output_config, provider)
+    if provider == "test":
+        response = load_test_response(prompt_path)
+        test_provider = response.get("_provider", "openai")
+        result = extract_response(response, output_config, test_provider)
+    else:
+        url, api_key = get_provider_config(provider)
+        response = make_request(url, api_key, model, prompt, output_config,
+                                provider)
+        if save_response_path:
+            save_response(response, provider, save_response_path)
+        result = extract_response(response, output_config, provider)
     print(result)
 
 
