@@ -1,7 +1,2 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
-
-# Go
-runprompt-go
+# Go build binary
+runprompt
