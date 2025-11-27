@@ -1,14 +1,15 @@
 # runprompt
 
-A single-file Python script for running [.prompt files](https://github.com/google/dotprompt).
+A command-line tool for running [.prompt files](https://github.com/google/dotprompt), written in Go.
 
 [Quick start](#quick-start) | [Examples](#examples) | [Configuration](#configuration) | [Providers](#providers)
 
 ## Quick start
 
 ```bash
-curl -O https://raw.githubusercontent.com/chr15m/runprompt/main/runprompt
-chmod +x runprompt
+git clone https://github.com/x86ed/runprompt.git
+cd runprompt
+go build -o runprompt .
 ```
 
 Create `hello.prompt`:
