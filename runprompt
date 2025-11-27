@@ -328,19 +328,20 @@ def main():
         sys.exit(1)
     url, api_key = get_provider_config(provider)
     raw_input = read_stdin()
-    variables = {}
+    variables = {"STDIN": raw_input or ""}
     if raw_input:
         try:
-            variables = json.loads(raw_input)
+            parsed = json.loads(raw_input)
+            variables.update(parsed)
             log("Parsed input as JSON")
         except ValueError:
             log("Input is not JSON, treating as raw string")
             input_schema = meta.get("input", {}).get("schema", {})
             if input_schema:
                 first_key = list(input_schema.keys())[0]
-                variables = {first_key: raw_input}
+                variables[first_key] = raw_input
             else:
-                variables = {"input": raw_input}
+                variables["input"] = raw_input
     prompt = render_template(template, variables)
     log("Rendered prompt: %s" % prompt)
     output_config = meta.get("output", {})
