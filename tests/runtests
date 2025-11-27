@@ -1,16 +1,32 @@
 #!/bin/bash
-set -e
 
-echo "Testing job.prompt..."
-echo "John is a 30 year old teacher" | ./runprompt --model test tests/job.prompt
+pass=0
+fail=0
 
-echo "Testing job-haiku.prompt..."
-echo '{"name": "John", "age": 30, "occupation": "teacher"}' | ./runprompt --model test tests/job-haiku.prompt
+run_test() {
+    name="$1"
+    shift
+    if output=$("$@" 2>&1); then
+        echo "✅ $name"
+        pass=$((pass + 1))
+    else
+        echo "❌ $name"
+        echo "$output"
+        fail=$((fail + 1))
+    fi
+}
 
-echo "Testing stdin-test.prompt..."
-echo "The quick brown fox jumps over the lazy dog." | ./runprompt --model test tests/stdin-test.prompt
+run_test "job.prompt" bash -c 'echo "John is a 30 year old teacher" | ./runprompt --model test tests/job.prompt'
 
-echo "Testing self.prompt..."
-./runprompt --model test tests/self.prompt
+run_test "job-haiku.prompt" bash -c 'echo '"'"'{"name": "John", "age": 30, "occupation": "teacher"}'"'"' | ./runprompt --model test tests/job-haiku.prompt'
 
-echo "All tests passed!"
+run_test "stdin-test.prompt" bash -c 'echo "The quick brown fox jumps over the lazy dog." | ./runprompt --model test tests/stdin-test.prompt'
+
+run_test "self.prompt" ./runprompt --model test tests/self.prompt
+
+echo ""
+echo "Passed: $pass, Failed: $fail"
+
+if [ $fail -gt 0 ]; then
+    exit 1
+fi
