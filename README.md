@@ -1,14 +1,25 @@
 # runprompt
 
-A single-file Python script for running [.prompt files](https://github.com/google/dotprompt).
+A command-line tool for running [.prompt files](https://github.com/google/dotprompt), written in Go.
 
-[Quick start](#quick-start) | [Examples](#examples) | [Configuration](#configuration) | [Providers](#providers)
+[Quick start](#quick-start) | [Building](#building) | [Examples](#examples) | [Configuration](#configuration) | [Providers](#providers)
 
 ## Quick start
 
+### Download pre-built binary
+
 ```bash
-curl -O https://raw.githubusercontent.com/chr15m/runprompt/main/runprompt
+# Download the latest release for your platform
+curl -L -o runprompt https://github.com/x86ed/runprompt/releases/latest/download/runprompt-$(uname -s)-$(uname -m)
 chmod +x runprompt
+```
+
+### Build from source
+
+```bash
+git clone https://github.com/x86ed/runprompt.git
+cd runprompt
+go build -o runprompt .
 ```
 
 Create `hello.prompt`:
@@ -25,6 +36,27 @@ Run it:
 ```bash
 export ANTHROPIC_API_KEY="your-key"
 echo '{"name": "World"}' | ./runprompt hello.prompt
+```
+
+## Building
+
+### Prerequisites
+
+- Go 1.21 or later
+
+### Build commands
+
+```bash
+# Build for current platform
+go build -o runprompt .
+
+# Run tests
+go test -v
+
+# Build for specific platforms
+GOOS=linux GOARCH=amd64 go build -o runprompt-linux-amd64 .
+GOOS=darwin GOARCH=arm64 go build -o runprompt-darwin-arm64 .
+GOOS=windows GOARCH=amd64 go build -o runprompt-windows-amd64.exe .
 ```
 
 ## Examples
