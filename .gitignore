@@ -1,2 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Go
+runprompt-go
+runprompt-test
+
+# Build output
+dist/
+
 # Go build binary
 runprompt
+
