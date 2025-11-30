@@ -9,3 +9,7 @@ runprompt-test
 
 # Build output
 dist/
+
+# Go build binary
+runprompt
+
